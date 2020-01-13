@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import discord
+from discord.ext import commands
 import csv
 from module.changename import *
 
@@ -43,10 +44,21 @@ def linknunion1(msg):
     return output
 
 
-def linknunion_main(msg):
-    if len(msg) is not 1:
-        output = linknunion1(msg)
-    else:
-        output = discord.Embed(title="#링크", description='#링크 (직업명) 으로 사용 가능합니다.\n명령어 입력 시 해당 직업의 유니온 효과와 링크스킬을 확인하실 수 있습니다.', color=0x00ff00)
-        output.set_footer(text="예) #링크 키네시스, #링크 제로")
-    return output
+class Linknunion(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command()
+    async def 링크(self, ctx, *args):
+        msg = ['#링크']
+        msg.extend(args)
+        if len(msg) is not 1:
+            output = linknunion1(msg)
+        else:
+            output = discord.Embed(title="#링크", description='#링크 (직업명) 으로 사용 가능합니다.\n명령어 입력 시 해당 직업의 유니온 효과와 링크스킬을 확인하실 수 있습니다.', color=0x00ff00)
+            output.set_footer(text="예) #링크 키네시스, #링크 제로")
+        
+        await ctx.send(embed=output)
+
+def setup(bot):
+    bot.add_cog(Linknunion(bot))

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+from discord.ext import commands
 
 from module.help import *
 from module.simbol import *
@@ -13,50 +13,41 @@ from module.homepage import *
 from module.linknunion import *
 from module.BodyAndMindTrainingCenter import *
 
-client = discord.Client()
+PREFIX = '#'
+
+extension_list = ['module.help', 'module.simbol',
+                  'module.additional_options', 'module.defense_percentage_ignore',
+                  'module.level', 'module.hangang',
+                  'module.linknunion',
+                  'module.BodyAndMindTrainingCenter']
+
+todolist=['module.gambling','module.information','module.homepage']
+
+bot = commands.Bot(command_prefix=PREFIX)
+bot.remove_command('help')
+
+for extension in extension_list:
+    bot.load_extension(extension)
+#client = discord.Client()
 
 
-@client.event
+@bot.event
 async def on_ready():
     print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
+    print(bot.user.name)
+    print(bot.user.id)
     print('hello')
     activity = discord.Game(name="#도움말 for help")
-    await client.change_presence(status=discord.Status.idle, activity=activity)
+    await bot.change_presence(status=discord.Status.idle, activity=activity)
 
 
-@client.event
+@bot.event
 async def on_message(message):
     if message.author.bot:
         return None
 
     if message.content.startswith("#"):
         logging_main(message)
-
-    if message.content.startswith("#help") or message.content.startswith("#도움말"):
-        output = help_main()
-        await message.channel.send(embed=output)
-
-    if message.content.startswith("#심볼"):
-        msg = message.content.split(" ")
-        output = simbol_main(msg)
-        await message.channel.send(embed=output)
-
-    if message.content.startswith("#추옵"):
-        msg = message.content.split(" ")
-        output = additional_options_main(msg)
-        await message.channel.send(embed=output)
-
-    if message.content.startswith("#방무"):
-        msg = message.content.split(" ")
-        output = defense_percentage_ignore_main(msg)
-        await message.channel.send(embed=output)
-
-    if message.content.startswith("#레벨"):
-        msg = message.content.split(" ")
-        output = level_main(msg)
-        await message.channel.send(embed=output)
 
     if message.content.startswith("#정보") \
             or message.content.startswith("#무릉") \
@@ -68,9 +59,6 @@ async def on_message(message):
         output = information_main(msg)
         await message.channel.send(embed=output)
 
-    if message.content.startswith("#한강"):
-        output = hangang_main()
-        await message.channel.send(embed=output)
 
     if message.content.startswith("#골드") \
             or message.content.startswith("#애플") \
@@ -93,15 +81,7 @@ async def on_message(message):
         output = homepage_main(msg)
         await message.channel.send(embed=output)
 
-    if message.content.startswith('#링크'):
-        msg = message.content.split(" ")
-        output = linknunion_main(msg)
-        await message.channel.send(embed=output)
-
-    if message.content.startswith('#심신'):
-        msg = message.content.split(" ")
-        output = BodyAndMindTrainingCenter_main(msg)
-        await message.channel.send(embed=output)
+    await bot.process_commands(message)
 
 
 try:
@@ -110,4 +90,4 @@ try:
 except:
     key = ''
 
-client.run(key)
+bot.run(key)
