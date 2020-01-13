@@ -104,4 +104,10 @@ async def on_message(message):
         await message.channel.send(embed=output)
 
 
-client.run('')
+try:
+    import keys
+    key = keys.key
+except:
+    key = ''
+
+client.run(key)
