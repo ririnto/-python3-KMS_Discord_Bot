@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import discord
+from discord.ext import commands
 import csv
 import requests
 from bs4 import BeautifulSoup
@@ -90,27 +91,37 @@ def level2(result, msg1, url):
 
     return output
 
+class Level(commands.Cog):
 
-def level_main(msg):
-    if len(msg) is 2:
-        empty_result = [[], [], [], [], [], [], []]
+    def __init__(self, bot):
+        self.bot = bot
 
-        main_url = 'https://maplestory.nexon.com/Ranking/World/Total?c=%s' % msg[1]
-        reboot_url = 'https://maplestory.nexon.com/Ranking/World/Total?c=%s&w=254' % msg[1]
-        main_result = level1(main_url)
+    @commands.command()
+    async def 레벨(self, ctx, *args):
+        msg = ['#레벨']
+        msg.extend(args)
+        if len(msg) is 2:
+            empty_result = [[], [], [], [], [], [], []]
 
-        if main_result == empty_result:
-            reboot_result = level1(reboot_url)
-            if reboot_result == empty_result:
-                output = discord.Embed(title="Warning!!!", description='랭킹 정보가 없습니다!', color=0xff0000)
+            main_url = 'https://maplestory.nexon.com/Ranking/World/Total?c=%s' % msg[1]
+            reboot_url = 'https://maplestory.nexon.com/Ranking/World/Total?c=%s&w=254' % msg[1]
+            main_result = level1(main_url)
+
+            if main_result == empty_result:
+                reboot_result = level1(reboot_url)
+                if reboot_result == empty_result:
+                    output = discord.Embed(title="Warning!!!", description='랭킹 정보가 없습니다!', color=0xff0000)
+                else:
+                    output = level2(reboot_result, msg[1], reboot_url)
             else:
-                output = level2(reboot_result, msg[1], reboot_url)
+                output = level2(main_result, msg[1], main_url)
         else:
-            output = level2(main_result, msg[1], main_url)
-    else:
-        output = discord.Embed(title="#레벨",
-                               description='#레벨 (닉네임)으로 사용 가능하며, 현재의 경험치와 250, 275까지 필요한 경험치 량을 나타냅니다.\n메이플스토리 공식 홈페이지의 정보를 활용합니다.',
-                               color=0x00ff00)
-        output.set_footer(text="예) #레벨 RIRINTO")
+            output = discord.Embed(title="#레벨",
+                                description='#레벨 (닉네임)으로 사용 가능하며, 현재의 경험치와 250, 275까지 필요한 경험치 량을 나타냅니다.\n메이플스토리 공식 홈페이지의 정보를 활용합니다.',
+                                color=0x00ff00)
+            output.set_footer(text="예) #레벨 RIRINTO")
 
-    return output
+        await ctx.send(embed=output)
+
+def setup(bot):
+    bot.add_cog(Level(bot))
