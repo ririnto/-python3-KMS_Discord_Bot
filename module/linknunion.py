@@ -6,6 +6,8 @@ import csv
 from module.changename import *
 import module.hidden
 
+server_url = "ec2-52-79-237-159.ap-northeast-2.compute.amazonaws.com"
+
 
 def linknunion1(msg):
     title = ''
@@ -24,7 +26,7 @@ def linknunion1(msg):
             if name.replace(" ", "") in row_list[0].replace(" ", ""):
                 subtitle = row_list[1]
                 value2 = row_list[2]
-                image = "http://" + serverurl + "/image/linkskill/%s.png" % \
+                image = "http://" + server_url + "/image/linkskill/%s.png" % \
                         row_list[3]
 
     with open(unionfile, newline='', encoding='UTF-8') as database:
