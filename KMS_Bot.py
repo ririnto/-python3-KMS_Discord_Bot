@@ -5,7 +5,7 @@ from module.simbol import *
 from module.additional_options import *
 from module.defense_percentage_ignore import *
 from module.level import *
-from module.information import *
+from module.information1 import *
 from module.hangang import *
 from module.logging import *
 from module.gambling import *

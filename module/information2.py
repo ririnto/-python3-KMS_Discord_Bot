@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import imgkit
 import random
-import hidden
+import module.hidden
 
 
 def achievement(msg, data, i):  # 업적

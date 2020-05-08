@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 import csv
 from module.changename import *
-import hidden
+import module.hidden
 
 
 def linknunion1(msg):
