@@ -56,18 +56,16 @@ class Simbol(commands.Cog):
                         if msg1 > msg2:
                             output = discord.Embed(title="Warning!!!", description='옵션 1은 옵션 2의 값을 넘을 수 없습니다!',
                                                    color=0xff0000)
-                            return output
                         else:
                             output = discord.Embed(title="심볼 %d → %d" % (msg1, msg2),
-                                                   description='필요 성장치 : %s \n 소멸의 여로 심볼 강화 비용 : %s \n 츄레아모에 심볼 강화 비용 : %s'
-                                                   % (simbol1(msg1, msg2), simbol2(msg1, msg2),
-                                                      simbol3(msg1, msg2)), color=0x0000ff)
-                            return output
+                                                   description='필요 성장치 : %s \n 소멸의 여로 심볼 강화 비용 : %s \n 츄레아모에 심볼 강화 비용 '
+                                                               ': %s '
+                                                               % (simbol1(msg1, msg2), simbol2(msg1, msg2),
+                                                                  simbol3(msg1, msg2)), color=0x0000ff)
                     else:
                         output = discord.Embed(
                             title="Warning!!!", description='숫자 범위 초과!', color=0xff0000)
                         output.set_footer(text="1이상, 20 이하의 정수만 입력해주세요!")
-                        return output
                 else:
                     output = discord.Embed(
                         title="Warning!!!", description='데이터는 정수값이어야 합니다!', color=0xff0000)
@@ -77,7 +75,9 @@ class Simbol(commands.Cog):
                 output.set_footer(text="#심볼 (옵션1) (옵션2)")
         else:
             output = discord.Embed(
-                title="#심볼", description='#심볼 (옵션1) (옵션2)을 입력하여 (옵션1)부터 (옵션2) 까지 심볼을 레벨업하는 데  필요한 심볼 갯수, 메소를 확인할 수 있습니다.', color=0x00ff00)
+                title="#심볼",
+                description='#심볼 (옵션1) (옵션2)을 입력하여 (옵션1)부터 (옵션2) 까지 심볼을 레벨업하는 데  필요한 심볼 갯수, 메소를 확인할 수 있습니다.',
+                color=0x00ff00)
             output.set_footer(text="#심볼 7 12")
 
         await ctx.send(embed=output)

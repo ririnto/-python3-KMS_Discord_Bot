@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 import csv
 from module.changename import *
+import hidden
 
 
 def linknunion1(msg):
@@ -23,7 +24,7 @@ def linknunion1(msg):
             if name.replace(" ", "") in row_list[0].replace(" ", ""):
                 subtitle = row_list[1]
                 value2 = row_list[2]
-                image = "http://ec2-52-79-205-251.ap-northeast-2.compute.amazonaws.com/image/linkskill/%s.png" % \
+                image = "http://" + serverurl + "/image/linkskill/%s.png" % \
                         row_list[3]
 
     with open(unionfile, newline='', encoding='UTF-8') as database:

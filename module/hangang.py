@@ -24,10 +24,12 @@ class Hangang(commands.Cog):
             temperature = json_data["temp"]
             time = json_data["time"]
 
-        output = discord.Embed(title="지금 한강 온도", description='%s °C\n최종 업데이트 시간 : %s' % (temperature, time), color=0xff0000)
+        output = discord.Embed(title="지금 한강 온도", description='%s °C\n최종 업데이트 시간 : %s' % (temperature, time),
+                               color=0xff0000)
         output.set_footer(text="도움이 필요하세요? ☎ 1393")
 
         await ctx.send(embed=output)
+
 
 def setup(bot):
     bot.add_cog(Hangang(bot))

@@ -23,7 +23,7 @@ extension_list = ['module.help', 'module.simbol',
 
 todolist=['module.gambling','module.information','module.homepage']
 
-bot = commands.Bot(command_prefix=PREFIX)
+bot = commands.AutoShardedBot(command_prefix=PREFIX)
 bot.remove_command('help')
 
 for extension in extension_list:

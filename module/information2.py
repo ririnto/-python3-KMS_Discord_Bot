@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import imgkit
 import random
+import hidden
 
 
 def achievement(msg, data, i):  # 업적
@@ -38,7 +39,7 @@ def achievement(msg, data, i):  # 업적
                            description='%s\n%s\n%s\n%s' % (result[0], result[1], result[2], result[3]),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://ec2-52-79-205-251.ap-northeast-2.compute.amazonaws.com/image/achievement/%s.png" % rank)
+        url="http://" + serverurl + "/image/achievement/%s.png" % rank)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
     return output
@@ -76,7 +77,7 @@ def union(msg, data, i):  # 유니온
                                result[1], result[0], format(int(result[2]), ','), result[3], num),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://ec2-52-79-205-251.ap-northeast-2.compute.amazonaws.com/image/union/%s/%s.png" % (rank1, rank2))
+        url="http://" + serverurl + "/image/union/%s/%s.png" % (rank1, rank2))
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
     return output
@@ -98,6 +99,7 @@ def information2(msg, data, i):  # 무릉, 더시드
                            color=0x0000ff)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
     return output
+
 
 def information2_main(msg):
     if len(msg) is 2:

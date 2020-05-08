@@ -38,7 +38,7 @@ def homepage1(target1, target2, title):
 
     output = discord.Embed(title=title, color=0x0000ff)
     for i in range(0, len(list[0])):
-        output.add_field(name="ㅤ\n" + list[0][i], value=list[1][i] + "\n" + list[2][i], inline = False)
+        output.add_field(name="ㅤ\n" + list[0][i], value=list[1][i] + "\n" + list[2][i], inline=False)
 
     with open("module/homepage/" + target1 + ".txt", "w", encoding="utf-8") as file:
         for i in range(0, len(list[0])):
