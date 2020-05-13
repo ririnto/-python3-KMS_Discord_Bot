@@ -1,18 +1,5 @@
 from discord.ext import commands
-
-from module.help import *
-from module.simbol import *
-from module.additional_options import *
-from module.defense_percentage_ignore import *
-from module.level import *
-from module.information1 import *
-from module.informaiton2 import *
-from module.hangang import *
-from module.logging import *
-from module.gambling import *
-from module.homepage import *
-from module.linknunion import *
-from module.BodyAndMindTrainingCenter import *
+import module
 
 PREFIX = '#'
 
@@ -52,30 +39,17 @@ async def on_message(message):
     if message.content.startswith("#"):
         logging_main(message)
 
-    elif message.content.startswith("#정보"):
-        status = information_reader(message)
-        msg = message.content.split(" ")
-        if status is 1:
-            output = information_none()
-            await message.channel.send(embed=output)
-        elif status is 2:
-            path = information1(msg)
-            await message.channel.send(file=discord.File(path, filename=msg[1] + '.png'))
-            output = discord.Embed()
-            output.set_footer(text="https://maple.gg/u/%s" % msg[1])
-            await message.channel.send(embed=output)
-        else:
-            output = information_help()
-            await message.channel.send(embed=output)
-
-    elif message.content.startswith("#무릉") \
+    elif message.content.startswith("#정보") \
+            or messagemessage.content.startswith("#무릉") \
             or message.content.startswith("#시드") \
             or message.content.startswith("#더시드") \
             or message.content.startswith("#유니온") \
             or message.content.startswith("#업적"):
         msg = message.content.split(" ")
-        output = information2_main(msg)
-        await message.channel.send(embed=output)
+        (output1, output2) = information_main(msg)
+        if not output2 < 1:
+            await message.channel.send(file=discord.File(output2, filename=msg[1] + '.png'))
+        await message.channel.send(embed=output1)
 
     if message.content.startswith("#골드") \
             or message.content.startswith("#애플") \

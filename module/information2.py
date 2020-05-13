@@ -9,6 +9,8 @@ import random
 import module.hidden
 
 
+
+
 def achievement(msg, data, i):  # 업적
     temp = [[], [], [], []]
     result = [[], [], [], []]
