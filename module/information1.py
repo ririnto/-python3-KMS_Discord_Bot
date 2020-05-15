@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import imgkit
 import random
-import module.hidden
+from module.hidden import *
 
 server_url = server_url()
 
@@ -41,10 +41,10 @@ def achievement(msg, data, i):  # 업적
                            description='%s\n%s\n%s\n%s' % (result[0], result[1], result[2], result[3]),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://" + serverurl + "/image/achievement/%s.png" % rank)
+        url="http://" + server_url + "/image/achievement/%s.png" % rank)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
-    return output
+    return (output,)
 
 
 def union(msg, data, i):  # 유니온
@@ -79,10 +79,10 @@ def union(msg, data, i):  # 유니온
                                result[1], result[0], format(int(result[2]), ','), result[3], num),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://" + serverurl + "/image/union/%s/%s.png" % (rank1, rank2))
+        url="http://" + server_url + "/image/union/%s/%s.png" % (rank1, rank2))
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
-    return output
+    return (output,)
 
 
 def information2(msg, data, i):  # 무릉, 더시드
@@ -100,11 +100,11 @@ def information2(msg, data, i):  # 무릉, 더시드
                            description='%s\n기록 : %s\n시간 : %s\n날짜 : %s' % (result[2], result[0], result[1], result[3]),
                            color=0x0000ff)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
-    return output
+    return (output,)
 
 
 def information1(msg):
-    f = open('./module/css/style.css', "r", encoding="utf8")
+    f = open('css/style.css', "r", encoding="utf8")
     css_data = f.read()
     f.close()
 

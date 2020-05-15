@@ -3,6 +3,9 @@
 import discord
 from discord.ext import commands
 import csv
+from module.hidden import *
+
+server_url = server_url()
 
 
 def additional_options1(msg, weapon):
@@ -28,10 +31,10 @@ def additional_options1(msg, weapon):
                     msg[2] = "1형"
                 title = row_list[1]
                 data = "기본 공격력 : " + row_list[2] + "\n\n"
-                for k in range(1, len(row_list)-3):
-                    data += "☆" * (len(row_list)-4-k) + "★" * \
-                        k + " : " + row_list[k+2] + "\n"
-                image = "http://ec2-52-79-205-251.ap-northeast-2.compute.amazonaws.com/image/weapon/%s/%s.png" % (
+                for k in range(1, len(row_list) - 3):
+                    data += "☆" * (len(row_list) - 4 - k) + "★" * \
+                            k + " : " + row_list[k + 2] + "\n"
+                image = "http://" + server_url + "/image/weapon/%s/%s.png" % (
                     weapon, row_list[len(row_list) - 1])
     if not title:
         output = discord.Embed(
@@ -48,8 +51,8 @@ def additional_options1(msg, weapon):
                         data = "기본 공격력 : " + row_list[2] + "\n\n"
                         for k in range(1, len(row_list) - 3):
                             data += "☆" * (len(row_list) - 4 - k) + \
-                                "★" * k + " : " + row_list[k + 2] + "\n"
-                        image = "http://ec2-52-79-205-251.ap-northeast-2.compute.amazonaws.com/image/weapon/%s/%s.png" % (
+                                    "★" * k + " : " + row_list[k + 2] + "\n"
+                        image = "http://" + server_url + "/image/weapon/%s/%s.png" % (
                             weapon, row_list[len(row_list) - 1])
         if title:
             output = discord.Embed(
@@ -57,7 +60,7 @@ def additional_options1(msg, weapon):
             output.set_thumbnail(url=image)
     else:
         output = discord.Embed(title="%s" %
-                               title, description='%s' % data, color=0x0000ff)
+                                     title, description='%s' % data, color=0x0000ff)
         output.set_thumbnail(url=image)
     return output
 
@@ -76,18 +79,18 @@ class AddiOptions(commands.Cog):
                                    color=0x00ff00)
             output.set_footer(text="예) #추옵 우트가르드 케인, #추옵 제로 1형, #추옵 해카세")
         else:
-            if msg[1].startswith("알리")\
+            if msg[1].startswith("알리") \
                     or msg[1].startswith("변질"):
                 output = additional_options1(msg, "alicia's_mutated_staff")
-            elif msg[1].startswith("아케")\
+            elif msg[1].startswith("아케") \
                     or msg[1].startswith("아셰"):
                 output = additional_options1(msg, 'arcane_umbra')
-            elif msg[1].startswith("시그")\
-                    or msg[1].startswith("여제")\
-                    or msg[1].startswith("라이온")\
-                    or msg[1].startswith("드래")\
-                    or msg[1].startswith("팔콘")\
-                    or msg[1].startswith("레이")\
+            elif msg[1].startswith("시그") \
+                    or msg[1].startswith("여제") \
+                    or msg[1].startswith("라이온") \
+                    or msg[1].startswith("드래") \
+                    or msg[1].startswith("팔콘") \
+                    or msg[1].startswith("레이") \
                     or msg[1].startswith("샤크"):
                 output = additional_options1(msg, 'cygnus')
             elif msg[1].startswith("파프"):
@@ -96,8 +99,8 @@ class AddiOptions(commands.Cog):
                 output = additional_options1(msg, 'genesis')
             elif msg[1].startswith("쟈이"):
                 output = additional_options1(msg, 'jaihin')
-            elif msg[1].startswith("해방")\
-                    or msg[1].startswith("해카")\
+            elif msg[1].startswith("해방") \
+                    or msg[1].startswith("해카") \
                     or msg[1].startswith("카이"):
                 output = additional_options1(msg, 'liberated_kaiserium')
             elif msg[1].startswith("라이"):
@@ -110,11 +113,11 @@ class AddiOptions(commands.Cog):
                 output = additional_options1(msg, "ryude's_sword")
             elif msg[1].startswith("우트"):
                 output = additional_options1(msg, 'utgard')
-            elif msg[1].startswith("자쿰")\
+            elif msg[1].startswith("자쿰") \
                     or msg[1].startswith("포이"):
                 output = additional_options1(msg, "zakum's_poisonic")
-            elif msg[1].startswith("제로")\
-                    or msg[1].startswith("라피스")\
+            elif msg[1].startswith("제로") \
+                    or msg[1].startswith("라피스") \
                     or msg[1].startswith("라즐리"):
                 output = additional_options1(msg, 'zero')
             elif msg[1].startswith("앱솔"):
@@ -123,8 +126,9 @@ class AddiOptions(commands.Cog):
                 output = discord.Embed(
                     title="Warning!!!", description='올바른 옵션을 입력하세요.', color=0xff0000)
                 output.set_footer(text="#추옵 (셋트 종류) (무기 종류)")
-        
+
         await ctx.send(embed=output)
+
 
 def setup(bot):
     bot.add_cog(AddiOptions(bot))

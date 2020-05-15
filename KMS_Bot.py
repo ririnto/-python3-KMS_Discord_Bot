@@ -1,5 +1,19 @@
 from discord.ext import commands
-import module
+
+from module.help import *
+from module.simbol import *
+from module.additional_options import *
+from module.defense_percentage_ignore import *
+from module.level import *
+from module.information1 import *
+from module.informaiton2 import *
+from module.hangang import *
+from module.logging import *
+from module.gambling import *
+from module.homepage import *
+from module.linknunion import *
+from module.BodyAndMindTrainingCenter import *
+
 
 PREFIX = '#'
 
@@ -40,7 +54,7 @@ async def on_message(message):
         logging_main(message)
 
     elif message.content.startswith("#정보") \
-            or messagemessage.content.startswith("#무릉") \
+            or message.content.startswith("#무릉") \
             or message.content.startswith("#시드") \
             or message.content.startswith("#더시드") \
             or message.content.startswith("#유니온") \

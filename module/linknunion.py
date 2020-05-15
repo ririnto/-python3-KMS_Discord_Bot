@@ -4,9 +4,9 @@ import discord
 from discord.ext import commands
 import csv
 from module.changename import *
-import module.hidden
+from module.hidden import *
 
-server_url = "ec2-52-79-237-159.ap-northeast-2.compute.amazonaws.com"
+server_url = server_url()
 
 
 def linknunion1(msg):
@@ -60,7 +60,7 @@ class Linknunion(commands.Cog):
         else:
             output = discord.Embed(title="#링크", description='#링크 (직업명) 으로 사용 가능합니다.\n명령어 입력 시 해당 직업의 유니온 효과와 링크스킬을 확인하실 수 있습니다.', color=0x00ff00)
             output.set_footer(text="예) #링크 키네시스, #링크 제로")
-        
+
         await ctx.send(embed=output)
 
 def setup(bot):
