@@ -1,19 +1,16 @@
 from discord.ext import commands
-
 from module.help import *
 from module.simbol import *
 from module.additional_options import *
 from module.defense_percentage_ignore import *
 from module.level import *
-from module.information1 import *
-from module.informaiton2 import *
+from module.information import *
 from module.hangang import *
 from module.logging import *
 from module.gambling import *
 from module.homepage import *
 from module.linknunion import *
 from module.BodyAndMindTrainingCenter import *
-
 
 PREFIX = '#'
 
@@ -23,16 +20,14 @@ extension_list = ['module.help', 'module.simbol',
                   'module.linknunion',
                   'module.BodyAndMindTrainingCenter']
 
-todolist = ['module.gambling', 'module.information', 'module.homepage']
+todolist=['module.gambling','module.information','module.homepage']
 
 bot = commands.AutoShardedBot(command_prefix=PREFIX)
 bot.remove_command('help')
 
 for extension in extension_list:
     bot.load_extension(extension)
-
-
-# client = discord.Client()
+#client = discord.Client()
 
 
 @bot.event
@@ -53,17 +48,17 @@ async def on_message(message):
     if message.content.startswith("#"):
         logging_main(message)
 
-    elif message.content.startswith("#정보") \
+    if message.content.startswith("#정보") \
             or message.content.startswith("#무릉") \
             or message.content.startswith("#시드") \
             or message.content.startswith("#더시드") \
             or message.content.startswith("#유니온") \
             or message.content.startswith("#업적"):
         msg = message.content.split(" ")
-        (output1, output2) = information_main(msg)
-        if not output2 < 1:
-            await message.channel.send(file=discord.File(output2, filename=msg[1] + '.png'))
-        await message.channel.send(embed=output1)
+        outputs = information_main(msg)
+        if len(outputs) is 2:
+            await message.channel.send(file=discord.File(outputs[1], filename=msg[1] + '.png'))
+        await message.channel.send(embed=outputs[0])
 
     if message.content.startswith("#골드") \
             or message.content.startswith("#애플") \
@@ -91,7 +86,6 @@ async def on_message(message):
 
 try:
     import keys
-
     key = keys.key
 except:
     key = ''

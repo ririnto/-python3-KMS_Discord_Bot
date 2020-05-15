@@ -6,9 +6,9 @@ import requests
 from bs4 import BeautifulSoup
 import imgkit
 import random
-import module.hidden
+from module.hidden import *
 
-
+server_url = server_url()
 
 
 def achievement(msg, data, i):  # 업적
@@ -41,10 +41,10 @@ def achievement(msg, data, i):  # 업적
                            description='%s\n%s\n%s\n%s' % (result[0], result[1], result[2], result[3]),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://" + serverurl + "/image/achievement/%s.png" % rank)
+        url="http://" + server_url + "/image/achievement/%s.png" % rank)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
-    return output
+    return output,
 
 
 def union(msg, data, i):  # 유니온
@@ -79,10 +79,10 @@ def union(msg, data, i):  # 유니온
                                result[1], result[0], format(int(result[2]), ','), result[3], num),
                            color=0x0000ff)
     output.set_thumbnail(
-        url="http://" + serverurl + "/image/union/%s/%s.png" % (rank1, rank2))
+        url="http://" + server_url + "/image/union/%s/%s.png" % (rank1, rank2))
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
 
-    return output
+    return output,
 
 
 def information2(msg, data, i):  # 무릉, 더시드
@@ -100,10 +100,82 @@ def information2(msg, data, i):  # 무릉, 더시드
                            description='%s\n기록 : %s\n시간 : %s\n날짜 : %s' % (result[2], result[0], result[1], result[3]),
                            color=0x0000ff)
     output.set_footer(text="https://maple.gg/u/%s" % msg[1])
-    return output
+    return output,
 
 
-def information2_main(msg):
+def information1(msg):
+    with open('./module/css/style.css', "r", encoding="utf8") as data:
+        css_data = data.read()
+
+    data = '<style>\n%s\n</style>\n' % css_data
+    result = [[]]
+
+    url = "https://maple.gg/u/%s" % (msg[1])
+    url = requests.get(url)
+    html = url.content
+    soup = BeautifulSoup(html, 'html.parser')
+    finder = soup.select("div#exampleModal > div > div.character-card")
+
+    for i in range(0, 3, 2):
+        p_tag = finder[0].select('img')[i]
+        del p_tag['crossorigin']
+
+    result.append(finder[0])
+    data += '<body>\n'
+    data += '%s' % result[1]
+    data += '\n</body>'
+    f = open('/var/www/html/information/temp.html', "w", encoding="UTF-8")
+    f.write(data)
+    f.close()
+    options = {
+        'format': 'png',
+        'encoding': "UTF-8",
+        "xvfb": "",
+        'quiet': '',
+        'crop-w': '303',
+        'crop-h': '442',
+        'crop-x': '360',
+        'crop-y': '8'
+    }
+    with open('/var/www/html/information/temp.html', 'r', encoding="UTF-8") as f:
+        imgkit.from_file(f, '/var/www/html/information/temp.png', options=options)
+
+    output = discord.Embed()
+    output.set_footer(text="https://maple.gg/u/%s" % msg[1])
+    path = '/var/www/html/information/temp.png'
+    return output, path
+
+
+#
+# def information_help(msg):
+#     output = discord.Embed(title="#정보",
+#                            description='#정보 (닉네임)을 입력하여 프로필을 확인할 수 있습니다.\n상세 정보 확인을 위해서는 #정보 대신 #무릉, #시드, #유니온, #업적 을 입력해주세요.',
+#                            color=0x00ff00)
+#     output.set_footer(text="예) #정보 RIRINTO, #무릉 RIRINTO")
+#     return output
+
+
+# def information_none():
+#     output = discord.Embed(title="Warning!!!", description='검색결과가 없습니다.', color=0xff0000)
+#     output.set_footer(text="캐릭터 이름을 다시 한 번 확인해주세요. 대소문자를 구분하며, 메이플지지의 정보를 기반으로 합니다.")
+#     return output
+
+# def information_reader(message):
+#     msg = message.content.split(" ")
+#     if len(msg) is 2:
+#         url = 'https://maple.gg/u/%s' % msg[1]
+#         url = requests.get(url)
+#         html = url.content
+#         soup = BeautifulSoup(html, 'html.parser')
+#         finder = soup.select(".bg-light")
+#         if finder[0].select('h3')[0].text == '검색결과가 없습니다.':
+#             return 1
+#         return 2
+#     else:
+#         return 3
+
+
+def information_main(msg):
     if len(msg) is 2:
         url = 'https://maple.gg/u/%s' % msg[1]
         url = requests.get(url)
@@ -123,13 +195,13 @@ def information2_main(msg):
                         output = discord.Embed(title="Warning!!!", description='기록이 없습니다.', color=0xff0000)
                         output.set_footer(text="https://maple.gg/u/%s" % msg[1])
                     else:
-                        output = information3(msg, data, 0)
+                        output = information2(msg, data, 0)
                 elif '시드' in msg[0]:
                     if data[1].select('div')[2].text == '기록이 없습니다.':
                         output = discord.Embed(title="Warning!!!", description='기록이 없습니다.', color=0xff0000)
                         output.set_footer(text="https://maple.gg/u/%s" % msg[1])
                     else:
-                        output = information3(msg, data, 1)
+                        output = information2(msg, data, 1)
                 elif '유니온' in msg[0]:
                     if data[2].select('div')[2].text == '기록이 없습니다.':
                         output = discord.Embed(title="Warning!!!", description='기록이 없습니다.', color=0xff0000)
@@ -147,5 +219,7 @@ def information2_main(msg):
                                description='#정보 (닉네임)을 입력하여 프로필을 확인할 수 있습니다.\n상세 정보 확인을 위해서는 #정보 대신 #무릉, #시드, #유니온, #업적 을 입력해주세요.',
                                color=0x00ff00)
         output.set_footer(text="예) #정보 RIRINTO, #무릉 RIRINTO")
-
-    return output
+    if type(output) is tuple:
+        return output
+    else:
+        return output,
