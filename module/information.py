@@ -146,35 +146,6 @@ def information1(msg):
     return output, path
 
 
-#
-# def information_help(msg):
-#     output = discord.Embed(title="#정보",
-#                            description='#정보 (닉네임)을 입력하여 프로필을 확인할 수 있습니다.\n상세 정보 확인을 위해서는 #정보 대신 #무릉, #시드, #유니온, #업적 을 입력해주세요.',
-#                            color=0x00ff00)
-#     output.set_footer(text="예) #정보 RIRINTO, #무릉 RIRINTO")
-#     return output
-
-
-# def information_none():
-#     output = discord.Embed(title="Warning!!!", description='검색결과가 없습니다.', color=0xff0000)
-#     output.set_footer(text="캐릭터 이름을 다시 한 번 확인해주세요. 대소문자를 구분하며, 메이플지지의 정보를 기반으로 합니다.")
-#     return output
-
-# def information_reader(message):
-#     msg = message.content.split(" ")
-#     if len(msg) is 2:
-#         url = 'https://maple.gg/u/%s' % msg[1]
-#         url = requests.get(url)
-#         html = url.content
-#         soup = BeautifulSoup(html, 'html.parser')
-#         finder = soup.select(".bg-light")
-#         if finder[0].select('h3')[0].text == '검색결과가 없습니다.':
-#             return 1
-#         return 2
-#     else:
-#         return 3
-
-
 def information_main(msg):
     if len(msg) is 2:
         url = 'https://maple.gg/u/%s' % msg[1]
