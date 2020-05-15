@@ -104,7 +104,7 @@ def information2(msg, data, i):  # 무릉, 더시드
 
 
 def information1(msg):
-    with open('./module/css/style.css', "r", encoding="utf8") as data:
+    with open('css/style.css', "r", encoding="utf8") as data:
         css_data = data.read()
 
     data = '<style>\n%s\n</style>\n' % css_data
