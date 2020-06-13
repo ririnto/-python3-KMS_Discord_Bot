@@ -26,7 +26,7 @@ def linknunion1(msg):
             if name.replace(" ", "") in row_list[0].replace(" ", ""):
                 subtitle = row_list[1]
                 value2 = row_list[2]
-                image = "http://" + server_url + "/image/linkskill/%s.png" % \
+                image = server_url + "/image/linkskill/%s.png" % \
                         row_list[3]
 
     with open(unionfile, newline='', encoding='UTF-8') as database:

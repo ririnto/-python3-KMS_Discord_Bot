@@ -34,7 +34,7 @@ def additional_options1(msg, weapon):
                 for k in range(1, len(row_list) - 3):
                     data += "☆" * (len(row_list) - 4 - k) + "★" * \
                             k + " : " + row_list[k + 2] + "\n"
-                image = "http://" + server_url + "/image/weapon/%s/%s.png" % (
+                image = server_url + "/image/weapon/%s/%s.png" % (
                     weapon, row_list[len(row_list) - 1])
     if not title:
         output = discord.Embed(
@@ -52,7 +52,7 @@ def additional_options1(msg, weapon):
                         for k in range(1, len(row_list) - 3):
                             data += "☆" * (len(row_list) - 4 - k) + \
                                     "★" * k + " : " + row_list[k + 2] + "\n"
-                        image = "http://" + server_url + "/image/weapon/%s/%s.png" % (
+                        image = server_url + "/image/weapon/%s/%s.png" % (
                             weapon, row_list[len(row_list) - 1])
         if title:
             output = discord.Embed(

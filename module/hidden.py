@@ -1,3 +1,3 @@
 def server_url():
-    server_url = "ec2-52-79-237-159.ap-northeast-2.compute.amazonaws.com"
+    server_url = "https://ririnto.github.io"
     return server_url
