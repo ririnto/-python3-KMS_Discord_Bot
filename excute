@@ -1,3 +1,2 @@
 #!/bin/sh
 nohup python3 -u KMS_Bot.py >>  ./log/nohup/$(date +%Y%m%d).log &
-nohup python3 -u KMS_Bot_timer.py >>  ./log/nohup/$(date +%Y%m%d).log &
